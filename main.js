@@ -37,9 +37,13 @@ const readClient =  () => getLocalStorage()
 
 
 //CRUD - UPDATE 
+//atualização dos dados do cliente, localiza o cliente pelo index [0,1..]
 const updateClient = (index, client) => {
+    //para alterar os dados, precisa ler os dados do cliente
     const novoCliente = readClient()
+    //localiza qual é o cliente que vai ser alterado pelo index, e vai receber nvas informacoes client.
     novoCliente[index] = client
+    //localiza o banco de dados e envia as novas informacoes pra ele
     setLocalStorage(novoCliente)
 }
 
