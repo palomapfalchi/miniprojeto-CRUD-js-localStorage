@@ -9,7 +9,7 @@ const closeModal = () => document.getElementById('modal')
 
 //INFORMACOES DO FORMULARIO (variavel com array)
 const tempClient = {
-    nome: "naa",
+    nome: "nico",
     email: "ana@hotmail.com",
     celular: "(11)99999-9988",
     cidade: "São Roque"
@@ -33,8 +33,17 @@ const createClient = (client) => {
 }
 
 //CRUD - READ
-const readClient =  () => getLocalStorage();
+const readClient =  () => getLocalStorage()
 
+
+//CRUD - UPDATE 
+const updateClient = (index, client) => {
+    const novoCliente = readClient()
+    novoCliente[index] = client
+    setLocalStorage(novoCliente)
+}
+
+//CRUD - DELETE
 
 
 //EVENTOS
