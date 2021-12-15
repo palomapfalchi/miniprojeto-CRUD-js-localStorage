@@ -4,8 +4,10 @@
 const openModal = () => document.getElementById('modal')
     .classList.add('active')
 
-const closeModal = () => document.getElementById('modal')
-    .classList.remove('active')
+const closeModal = () => {
+    clearFields() //limpa
+    document.getElementById('modal').classList.remove('active') //fecha
+}
 
 //INFORMACOES DO FORMULARIO (variavel com array)
 const tempClient = {
@@ -50,10 +52,40 @@ const updateClient = (index, client) => {
 //CRUD - DELETE
 const delet = (index) => {
     const dbClient = readClient()
-    // Slice (fatiar) - posição (index) e coloca 1 pra excluir "1 linha"
+    // Slice (fatiar) -> posição (index) e coloca 1 pra excluir "1 linha"
     dbClient.splice(index, 1)
     setLocalStorage(dbClient)
-} 
+}
+
+//PEGA O FORM E VERIFICA SE TODOS CAMPOS SEGUEM REGRAS DO HTML
+const isValidFields = () => {
+    return document.getElementById("form").reportValidity()
+}
+
+//INTERAÇÃO COM O USUARIO
+
+//FUNCAO LIMPAR CAMPOS
+const clearFields = () => {
+    const fields = document.querySelectorAll(".modal-field")
+    //ForEach(verifica todos os campos) e deixa o valor vazio
+    fields.forEach(field => field.value = "") 
+}
+
+const saveClient = () => {
+    if (isValidFields()) {
+        const cliente = {
+            nome: document.getElementById("nome").value,
+            email: document.getElementById("email").value,
+            celular: document.getElementById("celular").value,
+            cidade: document.getElementById("cidade").value
+        }
+        createClient(cliente)
+        clearFields()
+        closeModal()
+    }
+}
+
+
 
 //EVENTOS
 
@@ -63,3 +95,6 @@ document.getElementById('cadastrarCliente')
 //QUANDO CLICA NO "X", FECHA A CAIXINHA MODAL
 document.getElementById('modalClose')
     .addEventListener('click', closeModal)
+//QUANDO CLICAR EM SALVAR, SALVA NOVO CLIENTE
+document.getElementById("salvar")
+    .addEventListener("click", saveClient)
