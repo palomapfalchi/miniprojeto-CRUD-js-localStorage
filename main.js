@@ -20,16 +20,16 @@ const tempClient = {
 const getLocalStorage = () => JSON.parse(localStorage.getItem("db_client")) ?? []
 
 //manda o novo cliente para o localstorage(db) 
-const setLocalStorage = (novoClient) => localStorage.setItem("db_client", JSON.stringify(novoClient))
+const setLocalStorage = (dbClient) => localStorage.setItem("db_client", JSON.stringify(dbClient))
 
 //CRUD - Create Read Update Delete    
 
 //CRUD - CREATE
 const createClient = (client) => {
-    const novoClient = getLocalStorage()
+    const dbClient = getLocalStorage()
     //adiciona mais 1 client (createClient(tempClient))
-    novoClient.push(client)
-    setLocalStorage(novoClient)
+    dbClient.push(client)
+    setLocalStorage(dbClient)
 }
 
 //CRUD - READ
@@ -40,15 +40,20 @@ const readClient =  () => getLocalStorage()
 //atualização dos dados do cliente, localiza o cliente pelo index [0,1..]
 const updateClient = (index, client) => {
     //para alterar os dados, precisa ler os dados do cliente
-    const novoCliente = readClient()
+    const dbClient = readClient()
     //localiza qual é o cliente que vai ser alterado pelo index, e vai receber nvas informacoes client.
-    novoCliente[index] = client
+    dbClient[index] = client
     //localiza o banco de dados e envia as novas informacoes pra ele
-    setLocalStorage(novoCliente)
+    setLocalStorage(dbClient)
 }
 
 //CRUD - DELETE
-
+const delet = (index) => {
+    const dbClient = readClient()
+    // Slice (fatiar) - posição (index) e coloca 1 pra excluir "1 linha"
+    dbClient.splice(index, 1)
+    setLocalStorage(dbClient)
+} 
 
 //EVENTOS
 
